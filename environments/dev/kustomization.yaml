@@ -10,7 +10,7 @@ helmCharts:
   version: 1.20.1
   releaseName: istio-base
   namespace: istio-system
-  valuesFile: ../values/values-istio-base.yaml
+  valuesFile: values/values-istio-base.yaml
 
 # Istio Control Plane
 - name: istiod
@@ -18,7 +18,7 @@ helmCharts:
   version: 1.20.1
   releaseName: istiod
   namespace: istio-system
-  valuesFile: ../values/values-istiod.yaml
+  valuesFile: values/values-istiod.yaml
 
 # Istio Ingress Gateway
 - name: gateway
@@ -26,7 +26,7 @@ helmCharts:
   version: 1.20.1
   releaseName: istio-ingressgateway
   namespace: istio-ingress
-  valuesFile: ../values/values-istio-gateway.yaml
+  valuesFile: values/values-istio-gateway.yaml
 
 # HashiCorp Vault
 - name: vault
@@ -34,7 +34,15 @@ helmCharts:
   version: 0.27.0
   releaseName: vault
   namespace: vault
-  valuesFile: ../values/values-vault.yaml
+  valuesFile: values/values-vault.yaml
+
+# External Secrets Operator
+- name: external-secrets
+  repo: https://charts.external-secrets.io
+  version: 0.9.11
+  releaseName: external-secrets
+  namespace: external-secrets-system
+  valuesFile: values/values-external-secrets.yaml
 
 # Keycloak
 - name: keycloak
@@ -42,7 +50,7 @@ helmCharts:
   version: 17.3.1
   releaseName: keycloak
   namespace: keycloak
-  valuesFile: ../values/values-keycloak.yaml
+  valuesFile: values/values-keycloak.yaml
 
 # Elasticsearch (ECK Operator approach)
 - name: eck-operator
@@ -50,7 +58,7 @@ helmCharts:
   version: 2.10.0
   releaseName: eck-operator
   namespace: elastic-system
-  valuesFile: ../values/values-eck-operator.yaml
+  valuesFile: values/values-eck-operator.yaml
 
 # Kyverno Policy Engine
 - name: kyverno
@@ -58,13 +66,15 @@ helmCharts:
   version: 3.1.4
   releaseName: kyverno
   namespace: kyverno
-  valuesFile: ../values/values-kyverno.yaml
+  valuesFile: values/values-kyverno.yaml
 
 resources:
   - namespaces.yaml
   - cilium-loadbalancer.yaml
   - elastic-resources.yaml
   - istio-gateways.yaml
+  - vault-setup.yaml
+  - external-secrets-store.yaml
 
 commonLabels:
   environment: dev

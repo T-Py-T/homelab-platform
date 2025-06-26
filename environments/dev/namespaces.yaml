@@ -25,6 +25,14 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
+  name: external-secrets-system
+  labels:
+    istio-injection: disabled
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
   name: keycloak
   labels:
     istio-injection: enabled
