@@ -1,0 +1,40 @@
+# Kyverno Policy Engine Values
+replicaCount: 1
+
+resources:
+  limits:
+    memory: 384Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+# Install default policies
+installCRDs: true
+
+# Background scan interval
+backgroundController:
+  resources:
+    limits:
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 64Mi
+
+# Reports controller
+reportsController:
+  resources:
+    limits:
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 64Mi
+
+config:
+  # Validation failure action: enforce or audit
+  validationFailureAction: audit  # More lenient for dev
+  
+  # Generate success events
+  generateSuccessEvents: false
+  
+  # Webhook timeout
+  webhookTimeout: 10

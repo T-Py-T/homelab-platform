@@ -1,0 +1,72 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# ArgoCD will apply this kustomization.yaml file for infrastructure
+
+helmCharts:
+# Istio Base
+- name: base
+  repo: https://istio-release.storage.googleapis.com/charts
+  version: 1.20.1
+  releaseName: istio-base
+  namespace: istio-system
+  valuesFile: ../values/values-istio-base.yaml
+
+# Istio Control Plane
+- name: istiod
+  repo: https://istio-release.storage.googleapis.com/charts
+  version: 1.20.1
+  releaseName: istiod
+  namespace: istio-system
+  valuesFile: ../values/values-istiod.yaml
+
+# Istio Ingress Gateway
+- name: gateway
+  repo: https://istio-release.storage.googleapis.com/charts
+  version: 1.20.1
+  releaseName: istio-ingressgateway
+  namespace: istio-ingress
+  valuesFile: ../values/values-istio-gateway.yaml
+
+# HashiCorp Vault
+- name: vault
+  repo: https://helm.releases.hashicorp.com
+  version: 0.27.0
+  releaseName: vault
+  namespace: vault
+  valuesFile: ../values/values-vault.yaml
+
+# Keycloak
+- name: keycloak
+  repo: https://charts.bitnami.com/bitnami
+  version: 17.3.1
+  releaseName: keycloak
+  namespace: keycloak
+  valuesFile: ../values/values-keycloak.yaml
+
+# Elasticsearch (ECK Operator approach)
+- name: eck-operator
+  repo: https://helm.elastic.co
+  version: 2.10.0
+  releaseName: eck-operator
+  namespace: elastic-system
+  valuesFile: ../values/values-eck-operator.yaml
+
+# Kyverno Policy Engine
+- name: kyverno
+  repo: https://kyverno.github.io/kyverno
+  version: 3.1.4
+  releaseName: kyverno
+  namespace: kyverno
+  valuesFile: ../values/values-kyverno.yaml
+
+resources:
+  - namespaces.yaml
+  - cilium-loadbalancer.yaml
+  - elastic-resources.yaml
+  - istio-gateways.yaml
+
+commonLabels:
+  environment: dev
+  managed-by: argocd
+  component: infrastructure

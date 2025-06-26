@@ -1,0 +1,36 @@
+# Bitnami Keycloak Values
+auth:
+  adminUser: admin
+  adminPassword: admin123  # Change this for production!
+
+resources:
+  requests:
+    memory: 512Mi
+    cpu: 250m
+  limits:
+    memory: 1Gi
+    cpu: 500m
+
+replicaCount: 1
+
+service:
+  type: ClusterIP
+  
+postgresql:
+  enabled: true
+  auth:
+    postgresPassword: postgres123
+    username: keycloak
+    password: keycloak123
+    database: keycloak
+  primary:
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 250m
+      limits:
+        memory: 512Mi
+        cpu: 500m
+
+ingress:
+  enabled: false  # We'll use Istio Gateway instead

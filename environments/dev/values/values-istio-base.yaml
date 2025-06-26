@@ -1,0 +1,5 @@
+# Istio Base Chart Values
+defaultRevision: default
+
+global:
+  istioNamespace: istio-system

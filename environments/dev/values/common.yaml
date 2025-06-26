@@ -1,0 +1,62 @@
+# Common configuration values for dev environment
+environment: dev
+cluster:
+  name: dev-cluster
+  domain: dev.cluster.local
+  
+networking:
+  loadBalancer:
+    ipRange: "192.168.1.240/28"
+    interface: "eth0"
+  
+istio:
+  meshId: dev-mesh
+  network: dev-network
+  
+resources:
+  # Default resource limits for dev environment
+  small:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+  
+  medium:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  
+  large:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+
+storage:
+  # Default storage sizes for dev
+  small: 5Gi
+  medium: 10Gi
+  large: 20Gi
+
+tls:
+  # TLS certificate configuration
+  issuer: selfsigned  # Use cert-manager with self-signed for dev
+  
+monitoring:
+  retention: 7d  # Shorter retention for dev
+
+security:
+  policies:
+    enforcement: audit  # More lenient in dev
+    
+replicas:
+  # Default replica counts for dev
+  single: 1
+  redundant: 2

@@ -1,0 +1,79 @@
+# ArgoCD Gateway
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: argocd-gateway
+  namespace: argocd
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - argocd.dev.cluster.local
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    hosts:
+    - argocd.dev.cluster.local
+    tls:
+      mode: SIMPLE
+      credentialName: argocd-tls
+
+---
+# Vault Gateway
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: vault-gateway
+  namespace: vault
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - vault.dev.cluster.local
+
+---
+# Keycloak Gateway
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: keycloak-gateway
+  namespace: keycloak
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - keycloak.dev.cluster.local
+
+---
+# Kibana Gateway
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: kibana-gateway
+  namespace: elastic-system
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - kibana.dev.cluster.local

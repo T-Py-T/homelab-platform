@@ -1,0 +1,17 @@
+# Elastic Cloud on Kubernetes Operator Values
+managedNamespaces: ["elastic-system"]
+
+installCRDs: true
+
+replicaCount: 1
+
+resources:
+  limits:
+    cpu: 1
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 150Mi
+
+podSecurityContext:
+  runAsNonRoot: true

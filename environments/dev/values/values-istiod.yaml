@@ -1,0 +1,18 @@
+# Istio Control Plane Values
+global:
+  meshID: dev-mesh
+  multiCluster:
+    clusterName: dev-cluster
+  network: dev-network
+
+pilot:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  
+  env:
+    EXTERNAL_ISTIOD: false
