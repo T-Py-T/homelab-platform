@@ -1,14 +1,17 @@
-
 # File: environments/dev/01-infrastructure/values/values-istiod.yaml
-global: # Istio Control Plane Values
+global:
   meshID: dev-mesh
   multiCluster:
     clusterName: dev-cluster
   network: dev-network
   istioNamespace: istio-system
 
+# Disable ingress gateway in istiod chart
+gateways:
+  istio-ingressgateway:
+    enabled: false
+
 pilot:
-  # Explicitly set image to avoid "auto" default
   image: pilot
   tag: 1.20.1
   hub: docker.io/istio
@@ -25,5 +28,4 @@ pilot:
     EXTERNAL_ISTIOD: false
     PILOT_ENABLE_WORKLOAD_ENTRY_AUTOREGISTRATION: true
 
-# Ensure istiod waits for base to be ready
 revision: ""
