@@ -1,0 +1,42 @@
+# Platform Infrastructure Application
+# Layer 1: Core infrastructure (Istio, operators)
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: platform-infrastructure
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/T-Py-T/homelab-platform
+    targetRevision: HEAD
+    path: environments/dev/01-infrastructure
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    # Manual sync for infrastructure - controlled deployment
+    syncOptions:
+    - CreateNamespace=true
+    - RespectIgnoreDifferences=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+  # Health checks to ensure Istio is ready before proceeding
+  ignoreDifferences:
+  - group: install.istio.io
+    kind: IstioOperator
+    jsonPointers:
+    - /spec/revision
+  - group: admissionregistration.k8s.io
+    kind: ValidatingAdmissionWebhook
+    name: istio-validator-istio-system
+    jsonPointers:
+    - /webhooks/0/failurePolicy

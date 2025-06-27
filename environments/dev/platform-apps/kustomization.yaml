@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# App-of-Apps: Manages all platform layers
+# This is what the root ArgoCD application points to
+
+resources:
+- platform-infrastructure-app.yaml
+- platform-services-app.yaml  
+- platform-integrations-app.yaml
+
+labels:
+- includeSelectors: true
+  pairs:
+    component: platform-manager
+    environment: dev
+    managed-by: argocd

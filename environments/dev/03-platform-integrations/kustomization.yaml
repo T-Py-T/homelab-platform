@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Platform Integrations Layer - Cross-service configurations
+# Deploy THIRD, after platform services are ready
+
+resources:
+# Elasticsearch resources - Depends on ECK operator
+- elastic-resources.yaml
+# Cilium LoadBalancer configuration - Network policies
+- cilium-loadbalancer.yaml
+
+labels:
+- includeSelectors: true
+  pairs:
+    component: platform-integrations
+    environment: dev
+    managed-by: argocd
+    layer: "03-platform-integrations"

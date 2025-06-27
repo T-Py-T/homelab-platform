@@ -1,0 +1,39 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Infrastructure Layer - Core services that everything else depends on
+# Deploy FIRST, manually controlled sync
+
+helmCharts:
+# Istio Service Mesh - Must be deployed in order
+- name: base
+  namespace: istio-system
+  releaseName: istio-base
+  repo: https://istio-release.storage.googleapis.com/charts
+  valuesFile: values/values-istio-base.yaml
+  version: 1.20.1
+
+- name: istiod
+  namespace: istio-system
+  releaseName: istiod
+  repo: https://istio-release.storage.googleapis.com/charts
+  valuesFile: values/values-istiod.yaml
+  version: 1.20.1
+
+- name: gateway
+  namespace: istio-ingress
+  releaseName: istio-ingressgateway
+  repo: https://istio-release.storage.googleapis.com/charts
+  valuesFile: values/values-istio-gateway.yaml
+  version: 1.20.1
+
+resources:
+- namespaces.yaml
+
+labels:
+- includeSelectors: true
+  pairs:
+    component: infrastructure
+    environment: dev
+    managed-by: argocd
+    layer: "01-infrastructure"

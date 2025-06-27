@@ -1,0 +1,33 @@
+# Platform Integrations Application
+# Layer 3: Cross-service integrations and policies
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: platform-integrations
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/T-Py-T/homelab-platform
+    targetRevision: HEAD
+    path: environments/dev/03-platform-integrations
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - RespectIgnoreDifferences=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
