@@ -1,0 +1,4 @@
+# values/values-istio-gateway.yaml
+global:
+  proxy:
+    image: istio/proxyv2:1.20.1
