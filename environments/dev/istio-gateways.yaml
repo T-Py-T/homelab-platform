@@ -1,5 +1,5 @@
 # ArgoCD Gateway
-apiVersion: networking.istio.io/v1beta1
+apiVersion: networking.istio.io/v1
 kind: Gateway
 metadata:
   name: argocd-gateway
@@ -26,7 +26,7 @@ spec:
 
 ---
 # Vault Gateway
-apiVersion: networking.istio.io/v1beta1
+apiVersion: networking.istio.io/v1
 kind: Gateway
 metadata:
   name: vault-gateway
@@ -44,7 +44,7 @@ spec:
 
 ---
 # Keycloak Gateway
-apiVersion: networking.istio.io/v1beta1
+apiVersion: networking.istio.io/v1
 kind: Gateway
 metadata:
   name: keycloak-gateway
@@ -62,7 +62,7 @@ spec:
 
 ---
 # Kibana Gateway
-apiVersion: networking.istio.io/v1beta1
+apiVersion: networking.istio.io/v1
 kind: Gateway
 metadata:
   name: kibana-gateway
