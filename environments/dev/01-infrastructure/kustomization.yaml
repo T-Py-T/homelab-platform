@@ -1,39 +1,40 @@
+# File: environments/dev/01-infrastructure/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-# Infrastructure Layer - Core services that everything else depends on
-# Deploy FIRST, manually controlled sync
+resources:
+  - namespaces.yaml
 
 helmCharts:
-# Istio Service Mesh - Must be deployed in order
-- name: base
-  namespace: istio-system
-  releaseName: istio-base
-  repo: https://istio-release.storage.googleapis.com/charts
-  valuesFile: values/values-istio-base.yaml
-  version: 1.20.1
+  # Istio Base - CRDs and base components
+  - name: base
+    repo: https://istio-release.storage.googleapis.com/charts
+    version: 1.20.1
+    releaseName: istio-base
+    namespace: istio-system
+    includeCRDs: true
+    valuesFile: values/values-istio-base.yaml
 
-- name: istiod
-  namespace: istio-system
-  releaseName: istiod
-  repo: https://istio-release.storage.googleapis.com/charts
-  valuesFile: values/values-istiod.yaml
-  version: 1.20.1
+  # Istio Control Plane
+  - name: istiod
+    repo: https://istio-release.storage.googleapis.com/charts
+    version: 1.20.1
+    releaseName: istiod
+    namespace: istio-system
+    valuesFile: values/values-istiod.yaml
 
-- name: gateway
-  namespace: istio-ingress
-  releaseName: istio-ingressgateway
-  repo: https://istio-release.storage.googleapis.com/charts
-  valuesFile: values/values-istio-gateway.yaml
-  version: 1.20.1
-
-resources:
-- namespaces.yaml
+  # Istio Ingress Gateway
+  - name: gateway
+    repo: https://istio-release.storage.googleapis.com/charts
+    version: 1.20.1
+    releaseName: istio-ingressgateway
+    namespace: istio-ingress
+    valuesFile: values/values-istio-gateway.yaml
 
 labels:
-- includeSelectors: true
-  pairs:
-    component: infrastructure
-    environment: dev
-    managed-by: argocd
-    layer: "01-infrastructure"
+  - includeSelectors: true
+    pairs:
+      component: infrastructure
+      environment: dev
+      managed-by: argocd
+      layer: "01-infrastructure"

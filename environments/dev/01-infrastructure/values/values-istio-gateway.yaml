@@ -1,21 +1,26 @@
-# Istio Ingress Gateway Values
+# File: environments/dev/01-infrastructure/values/values-istio-gateway.yaml
+# Explicitly set image details
+image:
+  repository: istio/proxyv2
+  tag: 1.20.1
+
 service:
   type: LoadBalancer
   annotations:
     io.cilium/lb-ipam: "default-pool"
   ports:
-  - port: 15021
-    targetPort: 15021
-    name: status-port
-    protocol: TCP
-  - port: 80
-    targetPort: 8080
-    name: http2
-    protocol: TCP
-  - port: 443
-    targetPort: 8443
-    name: https
-    protocol: TCP
+    - port: 15021
+      targetPort: 15021
+      name: status-port
+      protocol: TCP
+    - port: 80
+      targetPort: 8080
+      name: http2
+      protocol: TCP
+    - port: 443
+      targetPort: 8443
+      name: https
+      protocol: TCP
 
 resources:
   requests:
@@ -29,4 +34,9 @@ autoscaling:
   enabled: false
 
 labels:
+  istio: ingressgateway
+
+# Explicitly set the gateway name and selector
+name: istio-ingressgateway
+selector:
   istio: ingressgateway
