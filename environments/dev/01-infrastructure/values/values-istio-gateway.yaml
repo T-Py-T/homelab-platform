@@ -1,9 +1,16 @@
 # File: environments/dev/01-infrastructure/values/values-istio-gateway.yaml
-# Explicitly set image details
 image:
   repository: istio/proxyv2
   tag: 1.20.1
 
+global:
+  proxy:
+    image: istio/proxyv2:1.20.1
+
+gateways:
+  istio-ingressgateway:
+    injectionTemplate: ""  # Disable injection template
+    
 service:
   type: LoadBalancer
   annotations:
@@ -34,9 +41,4 @@ autoscaling:
   enabled: false
 
 labels:
-  istio: ingressgateway
-
-# Explicitly set the gateway name and selector
-name: istio-ingressgateway
-selector:
   istio: ingressgateway
