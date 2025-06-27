@@ -6,8 +6,8 @@ kind: Kustomization
 
 resources:
 - platform-infrastructure-app.yaml
-- platform-services-app.yaml  
-- platform-integrations-app.yaml
+# - platform-services-app.yaml  
+# - platform-integrations-app.yaml
 
 labels:
 - includeSelectors: true
