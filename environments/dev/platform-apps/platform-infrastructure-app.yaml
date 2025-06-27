@@ -18,17 +18,26 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: default
+  # syncPolicy:
+  #   # Manual sync for infrastructure - controlled deployment
+  #   syncOptions:
+  #   - CreateNamespace=true
+  #   - RespectIgnoreDifferences=true
+  #   retry:
+  #     limit: 5
+  #     backoff:
+  #       duration: 5s
+  #       factor: 2
+  #       maxDuration: 3m
   syncPolicy:
-    # Manual sync for infrastructure - controlled deployment
+    automated:
+      prune: true
+      selfHeal: true
     syncOptions:
-    - CreateNamespace=true
-    - RespectIgnoreDifferences=true
-    retry:
-      limit: 5
-      backoff:
-        duration: 5s
-        factor: 2
-        maxDuration: 3m
+      - CreateNamespace=true
+      - ServerSideApply=true
+      - PruneLast=true
+      - Replace=true
   # Health checks to ensure Istio is ready before proceeding
   ignoreDifferences:
   - group: install.istio.io
