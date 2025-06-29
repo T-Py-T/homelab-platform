@@ -1,10 +1,10 @@
 # Bitnami Keycloak Values
 auth:
-  credentials:  
-    secretName: keycloak-secret
-    usernameSecretKey: adminUser
-    passwordSecretKey: adminPassword
-
+  valueFromRef:
+    secretKeyRef:
+      name: keycloak-secret
+      usernameSecretKey: adminUser
+      passwordSecretKey: adminPassword
 resources:
   requests:
     memory: 512Mi
@@ -20,11 +20,14 @@ service:
   
 postgresql:
   enabled: true
+
   auth:
-    postgresPassword: postgres123
-    username: keycloak
-    password: keycloak123
-    database: keycloak
+    secretName: postgresql-secret
+    postgresPassword: postgresPassword
+    username: username
+    password: password
+    database: database
+
   primary:
     resources:
       requests:
