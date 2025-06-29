@@ -12,6 +12,7 @@ helmCharts:
     releaseName: istio-ingressgateway
     namespace: istio-ingress
     valuesFile: values/values-istio-gateway.yaml
+
   # HashiCorp Vault - Secrets management
   - name: vault
     namespace: vault
@@ -59,7 +60,8 @@ resources:
   - vault-setup.yaml
   # External Secrets configuration - Depends on both Vault and ESO
   - external-secrets-store.yaml
-
+  - external-secrets/keycloak-secret.yaml
+  
 labels:
 - includeSelectors: true
   pairs:

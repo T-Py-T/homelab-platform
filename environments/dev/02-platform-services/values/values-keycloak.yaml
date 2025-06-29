@@ -1,7 +1,9 @@
 # Bitnami Keycloak Values
 auth:
-  adminUser: admin
-  adminPassword: admin123  # Change this for production!
+  credentials:  
+    secretName: keycloak-secret
+    usernameSecretKey: adminUser
+    passwordSecretKey: adminPassword
 
 resources:
   requests:
