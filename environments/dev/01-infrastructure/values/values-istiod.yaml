@@ -1,11 +1,21 @@
-# Istio Control Plane Values
+# File: environments/dev/01-infrastructure/values/values-istiod.yaml
 global:
   meshID: dev-mesh
   multiCluster:
     clusterName: dev-cluster
   network: dev-network
+  istioNamespace: istio-system
+
+# Disable ingress gateway in istiod chart
+gateways:
+  istio-ingressgateway:
+    enabled: false
 
 pilot:
+  image: pilot
+  tag: 1.20.1
+  hub: docker.io/istio
+  
   resources:
     requests:
       cpu: 100m
@@ -16,3 +26,6 @@ pilot:
   
   env:
     EXTERNAL_ISTIOD: false
+    PILOT_ENABLE_WORKLOAD_ENTRY_AUTOREGISTRATION: true
+
+revision: ""

@@ -1,19 +1,27 @@
+
+# File: environments/dev/01-infrastructure/namespaces.yaml
+---
+
 apiVersion: v1
 kind: Namespace
 metadata:
   name: istio-system
   labels:
+    name: istio-system
     istio-injection: disabled
 
 ---
+
 apiVersion: v1
 kind: Namespace
 metadata:
   name: istio-ingress
   labels:
-    istio-injection: disabled
+    name: istio-ingress
+    istio-injection: enabled
 
 ---
+
 apiVersion: v1
 kind: Namespace
 metadata:
