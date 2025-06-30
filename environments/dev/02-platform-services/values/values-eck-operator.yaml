@@ -1,4 +1,4 @@
-# Elastic Cloud on Kubernetes Operator Values
+# homelab-platform/environments/dev/02-platform-services/values/values-eck-operator.yaml
 managedNamespaces: ["elastic-system"]
 
 installCRDs: true
@@ -6,12 +6,13 @@ installCRDs: true
 replicaCount: 1
 
 resources:
-  limits:
-    cpu: 1
-    memory: 512Mi
   requests:
     cpu: 100m
     memory: 150Mi
+  limits:
+    cpu: 1000m
+    memory: 512Mi
 
-podSecurityContext:
-  runAsNonRoot: true
+# Enable webhooks for validation
+webhook:
+  enabled: true
