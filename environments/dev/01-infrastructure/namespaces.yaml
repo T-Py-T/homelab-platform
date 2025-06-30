@@ -35,6 +35,7 @@ kind: Namespace
 metadata:
   name: external-secrets-system
   labels:
+    name: external-secrets-system
     istio-injection: disabled
 
 ---
