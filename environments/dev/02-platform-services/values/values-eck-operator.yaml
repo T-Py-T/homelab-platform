@@ -1,9 +1,8 @@
 # homelab-platform/environments/dev/02-platform-services/values/values-eck-operator.yaml
-managedNamespaces: ["elastic-system"]
-
 installCRDs: true
 
-replicaCount: 1
+managedNamespaces: 
+  - elastic-system
 
 resources:
   requests:
@@ -13,6 +12,5 @@ resources:
     cpu: 1000m
     memory: 512Mi
 
-# Enable webhooks for validation
 webhook:
   enabled: true

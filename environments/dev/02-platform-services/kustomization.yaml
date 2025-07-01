@@ -54,14 +54,11 @@ helmCharts:
     version: 3.1.4
 
 resources:
-  # Istio Gateways - Depend on Istio being ready
-  - istio-gateways.yaml
-  # Vault configuration - Depends on Vault being deployed
-  - vault-setup.yaml
-  # External Secrets configuration - Depends on both Vault and ESO
-  - external-secrets-store.yaml
+  - istio-gateways.yaml  # Istio Gateways - Depend on Istio being ready
+  - vault-setup.yaml  # Vault configuration - Depends on Vault being deployed
+  - external-secrets-store.yaml # External Secrets configuration - Depends on both Vault and ESO
   - external-secrets/keycloak-secret.yaml
-  
+
 labels:
 - includeSelectors: true
   pairs:
