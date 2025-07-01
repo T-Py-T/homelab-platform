@@ -1,3 +1,4 @@
+# File: istio-gateways/all-gateways.yaml
 # ArgoCD Gateway
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
@@ -41,6 +42,15 @@ spec:
       protocol: HTTP
     hosts:
     - vault.dev.cluster.local
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    hosts:
+    - vault.dev.cluster.local
+    tls:
+      mode: SIMPLE
+      credentialName: vault-tls
 
 ---
 # Keycloak Gateway
@@ -59,6 +69,15 @@ spec:
       protocol: HTTP
     hosts:
     - keycloak.dev.cluster.local
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    hosts:
+    - keycloak.dev.cluster.local
+    tls:
+      mode: SIMPLE
+      credentialName: keycloak-tls
 
 ---
 # Kibana Gateway
@@ -77,3 +96,12 @@ spec:
       protocol: HTTP
     hosts:
     - kibana.dev.cluster.local
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    hosts:
+    - kibana.dev.cluster.local
+    tls:
+      mode: SIMPLE
+      credentialName: kibana-tls

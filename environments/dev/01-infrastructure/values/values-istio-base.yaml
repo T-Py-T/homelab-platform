@@ -1,9 +1,11 @@
-# File: environments/dev/01-infrastructure/values/values-istio-base.yaml
+# File: homelab-platform/environments/dev/01-infrastructure/values/values-istio-base.yaml
 defaultRevision: default
 
 global:
   istioNamespace: istio-system
-  
-# Explicitly set image details to avoid "auto" values
+
 base:
-  enableCRDTemplates: false
+  enableCRDTemplates: true
+  
+crds:
+  install: true
